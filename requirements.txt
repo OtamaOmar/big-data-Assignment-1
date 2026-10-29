@@ -1,0 +1,3 @@
+# extra packages only
+# quay.io/jupyter/scipy-notebook already has numpy, pandas,
+# matplotlib, seaborn and scikit-learn, so they are not repeated here
