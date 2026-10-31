@@ -10,7 +10,7 @@ Three of us:
 
 We are using dataset 1, the SMS Spam Collection, from the UCI page https://archive.ics.uci.edu/dataset/228/sms+spam+collection. The file UCI ships is tab-separated and has no header. I turned it into `data/dataset.csv` with two columns, `label` and `text`, and left the messages as they are. 5,574 rows: 4,827 ham and 747 spam. Hamza can use those numbers to check he loaded the right file.
 
-`notebook/analysis.ipynb` is empty. Hamza and Abdelrahman write in that notebook. It has to run inside the container. A run that only works on the laptop does not count. Kernel, Restart and Run All, and the files in `output/` have to be there afterwards.
+`notebook/analysis.ipynb` has the data section, the text section, and both models. It has to run inside the container. A run that only works on the laptop does not count. Kernel, Restart and Run All, and the files in `output/` have to be there afterwards.
 
 ## Layout
 
@@ -117,7 +117,8 @@ These were taken on this machine while `bd-a1` was running. They are already in 
 - `docker-ps-a.png`
 - `docker-logs.png`, JupyterLab starting inside the container
 - `docker-inspect.png`, the port mapping and the `output/` mount
-- `jupyter-notebook.png`, the empty notebook open in JupyterLab
+- `jupyter-notebook.png`, the notebook open in JupyterLab
+- `jupyter-word-frequency.png`, `jupyter-group-comparison.png`, `jupyter-classifier.png`, `jupyter-kmeans-choice.png`, and `jupyter-kmeans.png`, the text section and both models
 
 ```bash
 docker images
@@ -131,28 +132,28 @@ docker inspect bd-a1
 
 ## Docker Hub
 
-We still need to pick whose Docker Hub account receives the image. Put that username in the commands below. The tag is `csci461-a1`.
+The image is on Docker Hub.
 
-```bash
-docker tag bd-a1:latest YOUR_DOCKERHUB_USERNAME/bd-a1:csci461-a1
-docker login
-docker push YOUR_DOCKERHUB_USERNAME/bd-a1:csci461-a1
-```
-
-Repository: `YOUR_DOCKERHUB_USERNAME/bd-a1`
+Repository: `morat22/bd-a1`
 Tag: `csci461-a1`
 
-I push. Hamza or Abdelrahman pulls it on their own machine and runs it. The person who pushed does not do the pull check.
+```bash
+docker tag bd-a1:latest morat22/bd-a1:csci461-a1
+docker login
+docker push morat22/bd-a1:csci461-a1
+```
+
+That tag is already pushed. Hamza or Abdelrahman pulls it on their own machine and runs it. The person who pushed does not do the pull check.
 
 They clone this repo so they have an `output/` folder to mount, then:
 
 ```bash
-docker pull YOUR_DOCKERHUB_USERNAME/bd-a1:csci461-a1
+docker pull morat22/bd-a1:csci461-a1
 mkdir -p output/figures
 docker run --name bd-a1 \
   -p 8888:8888 \
   -v "$(pwd)/output:/home/jovyan/bd-a1/output" \
-  YOUR_DOCKERHUB_USERNAME/bd-a1:csci461-a1
+  morat22/bd-a1:csci461-a1
 ```
 
 The dataset and the notebook are already inside the image. The mount is still required, or the results vanish with the container.
@@ -169,7 +170,7 @@ The dataset and the notebook are already inside the image. The mount is still re
 
 ## What the notebook has to leave in `output/`
 
-The build does not create these. The notebook does, once Hamza and Abdelrahman have filled it in.
+The build does not create these. The notebook writes them. They are already in `output/` from the run inside the container.
 
 - `output/cleaned_data.csv`
 - at least four figures in `output/figures/`: correlation heatmap, word-frequency chart, group comparison, confusion matrix
