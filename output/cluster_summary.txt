@@ -1,0 +1,22 @@
+k: 2
+How k was chosen: highest silhouette on a 50-component SVD of TF-IDF, trying k = 2, 3, 4, 5, 6. k was not fixed at 3.
+Silhouette: 0.1965
+
+Sizes:
+  cluster 0: 497 records
+  cluster 1: 4674 records
+
+Label mix (row percent). Cluster id is not class id:
+  cluster 0: ham 99.2%, spam 0.8%
+  cluster 1: ham 86.1%, spam 13.9%
+
+Top terms:
+  cluster 0: ok, i'm, lor, home, going, i'll, come, it's
+  cluster 1: just, come, ur, know, good, got, time, like
+
+Reading:
+Cluster 0 is 99% ham. Leading terms: ok, i'm, lor, home, going.
+Cluster 1 is 86% ham. Leading terms: just, come, ur, know, good.
+Cluster 0 is the small group (497 rows). Its terms are short replies, and spam is only 0.8% of it.
+Cluster 1 is everything else. Spam is 13.9% of it, but ham still sets the average, so the top terms stay conversational.
+K-Means never saw the label, and a cluster number is not a class code.
